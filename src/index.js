@@ -75,6 +75,17 @@ class Game extends React.Component {
     });
   }
 
+  handleNewGame(){
+
+this.setState({
+  move:0,
+  squares: Array(9).fill(null),
+  stepNumber: 0,
+  xIsNext: true
+})
+
+  }
+
   jumpTo(step){
     this.setState({
       stepNumber: step,
@@ -86,15 +97,13 @@ class Game extends React.Component {
     const history= this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
-
+    const start = <button onClick={() => this.handleNewGame()}>{'New game'}</button>;
     const moves = history.map((step,move) => {
-      const desc = move ?
-      'Go to move ' + move :
-      'Go to game start';
-        return(
-          <li key={move}>
-            <button onClick={() => this.jumpTo(move)}>{desc}</button>
-          </li>
+      const desc = move;
+      return(
+        <li key={( 'Go to move ' + move)}>
+        <button onClick={() => this.jumpTo(move)}>{desc}</button>
+        </li>
       );
     });
 
@@ -116,6 +125,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <div>{start}</div>
           <ol>{moves}</ol>
         </div>
       </div>
